@@ -5,6 +5,28 @@ import numpy as np
 import string
 import itertools
 
+def combine_n_gram_features(n_gram_probabilities):
+	if type(n_gram_probabilities) is not list:
+		raise Exception("Invalid input to method. Only provide a list object.")
+
+
+	features = np.zeros((len(n_gram_probabilities), len(n_gram_probabilities[0].probability_features.keys())))
+
+	# I think this works as a sanity check.
+	# for i, text_features in enumerate(n_gram_probabilities):
+	#  	for j, n_gram in enumerate(n_gram_probabilities[0].probability_features.keys()):
+	#  		features[i, j] = text_features.probability_features[n_gram]
+	# pprint(features)
+
+	# This is probably more efficient however.
+	for i, text_features in enumerate(n_gram_probabilities):
+		features[i, :] = np.array(text_features.probability_features.values())
+
+	return features, n_gram_probabilities[0].probability_features.keys()
+
+
+
+
 class FunctionalNGram(object):
 	"""docstring for FunctionalNGram"""
 	def __init__(self, text):
@@ -65,11 +87,18 @@ class FunctionalNGram(object):
 
 			if alphabet[n_gram[0]] > 0:
 				n_gram_probabilities[n_gram] = self.n_grams[n_gram] / alphabet[n_gram[0]]
+
 			else:
 				n_gram_probabilities[n_gram] = 0.0
 
 		self.probability_features = n_gram_probabilities
 
 
-text = Text("../Texts/agamemnon.txt")
-fng = FunctionalNGram(text)
+# text = Text("../Texts/agamemnon.txt")
+# fng = FunctionalNGram(text)
+
+features, n_gram_list = combine_n_gram_features([FunctionalNGram(Text("../Texts/agamemnon.txt")), 
+	FunctionalNGram(Text("../Texts/octavia.txt"))])
+
+
+
