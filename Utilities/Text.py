@@ -9,6 +9,7 @@ class Text(object):
 
 	The functions within this class clean up the raw representation of text and
 	allow for manipulation of word case and punctuation. """
+	
 	def __init__(self, file_path):
 		""" Calls functions to preprocess raw text
 
