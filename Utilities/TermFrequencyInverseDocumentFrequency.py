@@ -78,13 +78,12 @@ class TermFrequencyInverseDocumentFrequency(object):
 
 text = Text("../Texts/agamemnon.txt")
 tfidf = TermFrequencyInverseDocumentFrequency(text)
+tfidf.add_text_to_corpus(Text("../Texts/oedipus.txt"))
+tfidf.add_text_to_corpus(Text("../Texts/medea.txt"))
 
 pprint(tfidf.calculate_similarity_scores(text))
 pprint(tfidf.corpus[0])
 
 features, word_list = tfidf.calculate_features_for_corpus()
 
-# pprint((word_list, features))
-
-
-	
+np.savetxt('test.txt', features)
