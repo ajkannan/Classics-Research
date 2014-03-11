@@ -2,6 +2,8 @@
 from pprint import pprint
 import re
 
+from os.path import split
+
 class Text(object):
 	"""docstring for Text"""
 	def __init__(self, file_path):
@@ -10,6 +12,9 @@ class Text(object):
 		self.open_file_path(file_path)
 		self.preprocess_raw_text()
 		self.concatenate_processed_text()
+		self.generate_list_of_words()
+
+		self.name = split(file_path)[-1]
 
 	def open_file_path(self, file_path):
 		text = []
@@ -70,6 +75,9 @@ class Text(object):
 		concatenated_text = concatenated_text[:-1]
 
 		self.concatenated_text = concatenated_text
+
+	def generate_list_of_words(self):
+		self.list = self.concatenated_text.split()
 
 
 # text = Text("../Texts/agamemnon.txt")

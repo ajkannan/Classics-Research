@@ -14,13 +14,14 @@ class FunctionalNGram(object):
 			raise Exception("Invalid input to FunctionalNGram class. Only provide inputs of type Text.")
 
 		self.text = text
-		self.find_n_grams(2)
+		self.find_n_grams()
 
 		self.compute_probability_features()
 
-	def find_n_grams(self, n):
+	def find_n_grams(self):
 		n_grams = self.initialize_n_grams()
 		text = self.text.processed_text
+		n = 2
 
 		for line in text:
 			joined_line = " ".join(line)
@@ -67,10 +68,7 @@ class FunctionalNGram(object):
 			else:
 				n_gram_probabilities[n_gram] = 0.0
 
-			
-		pprint(n_gram_probabilities)
-
-
+		self.probability_features = n_gram_probabilities
 
 
 text = Text("../Texts/agamemnon.txt")
