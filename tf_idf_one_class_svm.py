@@ -39,7 +39,7 @@ def main():
 	# Unfortunately, it does not appear to be possible to derive a perfect
 	# accuracy solution in the grid search specified below. However, it is
 	# provided here anyway for educational purposes.
-	grid_search = True
+	grid_search = False
 
 	if grid_search:
 		for kernel in ["rbf", "linear", "sigmoid", "poly"]:
@@ -59,9 +59,11 @@ def main():
 						raw_input()
 
 
-	# It is possible to achieve good results with nu = gamma = .1 and with
-	# a radial basis function kernel.
-	nu, kernel, gamma = 0.1, "rbf", 0.1
+
+	# The following settings using term-frequency inverse-document frequency
+	# gives a perfect classification result for the problem of Seneca's
+	# authorship attribution.
+	nu, kernel, gamma = 0.84437688442211067, "poly", 0.0
 	clf = svm.OneClassSVM(nu = nu, kernel = kernel, gamma = gamma)
 	clf.fit(x["train"])
 
