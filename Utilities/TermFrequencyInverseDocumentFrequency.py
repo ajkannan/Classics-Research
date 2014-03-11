@@ -5,16 +5,13 @@ import numpy as np
 
 class TermFrequencyInverseDocumentFrequency(object):
 	"""docstring for TermFrequencyInverseDocumentFrequency"""
-	def __init__(self, text):
+	def __init__(self):
 		super(TermFrequencyInverseDocumentFrequency, self).__init__()
 		
-		if type(text) is not Text:
-			raise Exception("Invalid input to FunctionalNGram class. Only provide inputs of type Text.")
-
 		self.corpus = []
 		self.corpus_frequencies = {}
 
-		self.add_text_to_corpus(text)
+		
 
 
 	def add_text_to_corpus(self, text):
@@ -76,14 +73,16 @@ class TermFrequencyInverseDocumentFrequency(object):
 
 
 
-text = Text("../Texts/agamemnon.txt")
-tfidf = TermFrequencyInverseDocumentFrequency(text)
-tfidf.add_text_to_corpus(Text("../Texts/oedipus.txt"))
-tfidf.add_text_to_corpus(Text("../Texts/medea.txt"))
+# text = Text("../Texts/agamemnon.txt")
+# tfidf = TermFrequencyInverseDocumentFrequency()
 
-pprint(tfidf.calculate_similarity_scores(text))
-pprint(tfidf.corpus[0])
+# tfidf.add_text_to_corpus(Text("../Texts/agamemnon.txt"))
+# tfidf.add_text_to_corpus(Text("../Texts/oedipus.txt"))
+# tfidf.add_text_to_corpus(Text("../Texts/medea.txt"))
 
-features, word_list = tfidf.calculate_features_for_corpus()
+# pprint(tfidf.calculate_similarity_scores(text))
+# pprint(tfidf.corpus[0])
 
-np.savetxt('test.txt', features)
+# features, word_list = tfidf.calculate_features_for_corpus()
+
+# np.savetxt('test.txt', features)

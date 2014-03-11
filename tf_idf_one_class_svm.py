@@ -2,8 +2,7 @@ from os import listdir
 from os.path import isfile, join
 
 from Utilities.Text import Text
-from Utilities.FunctionalNGram import FunctionalNGram as FNG
-from Utilities.FunctionalNGram import combine_n_gram_features as combine
+from Utilities.TermFrequencyInverseDocumentFrequency import TermFrequencyInverseDocumentFrequency as TFIDF
 
 from sklearn import svm
 from pprint import pprint
@@ -15,11 +14,12 @@ def main():
 	path = "./Texts/"
 	files = [f for f in listdir(path) if isfile(join(path, f))]
 
-	# Extract n gram probability features from the texts and 
-	# construct them as a numpy 2D array. We also returns the 
-	# n grams under consideration in the experiments here, 
-	# although we have no particular use for them.
-	features, n_grams = combine([FNG(Text(path + f)) for f in files])
+	tfidf = TFIDF()
+
+	for document in files:
+		tfidf.add_text_to_corpus(Text(path + document))
+
+	features, word_list = tfidf.calculate_features_for_corpus()
 
 	apply_pca = True
 
@@ -53,8 +53,7 @@ def main():
 						"train" : clf.predict(x["train"]),
 						"test" : clf.predict(x["test"])
 						}
-				
-
+					
 					if all(y["train"] == 1.0) and all(y["test"] == -1.0):
 						pprint({"nu" : nu, "gamma" : gamma, "y" : y, "kernel" : kernel})
 						raw_input()
