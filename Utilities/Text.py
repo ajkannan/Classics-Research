@@ -5,8 +5,21 @@ import re
 from os.path import split
 
 class Text(object):
-	"""docstring for Text"""
+	""" The Text class represents the text in different formats.
+
+	The functions within this class clean up the raw representation of text and
+	allow for manipulation of word case and punctuation. """
 	def __init__(self, file_path):
+		""" Calls functions to preprocess raw text
+
+		Parameters
+		----------
+		file_path: the file path to the file containing the raw text
+
+		Returns
+		-------
+		None """
+
 		super(Text, self).__init__()
 
 		self.open_file_path(file_path)
@@ -17,6 +30,16 @@ class Text(object):
 		self.name = split(file_path)[-1]
 
 	def open_file_path(self, file_path):
+		""" Opens the desire file and obtains raw text as a single string.
+
+		Parameters
+		----------
+		file_path: the file path to the file containing the raw text
+
+		Returns
+		-------
+		None """
+
 		text = []
 		with open(file_path, "r") as f:
 			for line in f:
@@ -25,6 +48,26 @@ class Text(object):
 		self.raw = text
 
 	def preprocess_raw_text(self, lower_case = True, punctuation = "delete"):
+		""" Parses entire raw text line by line.
+
+		Splits raw text into lines and calls helper function to process each line.
+
+		Parameters
+		----------
+		lower_case: True makes all words lowercase, False leaves capitalization
+		            as is (True by default)
+		punctuation: "separate" will separate punctuation from the neighboring words
+	                 "delete" will delete all punctuation
+					 Anything else will leave the punctuation as is, which most
+					 often means the punctuation will be the last character of
+					 the preceding word in the line of text.
+					 ("delete" is default)
+		Returns
+		-------
+		None
+		"""
+
+
 		processed_text = []
 		for line in self.raw:
 			processed_line = self.process_line(line, lower_case, punctuation)
@@ -34,6 +77,31 @@ class Text(object):
 		self.processed_text = processed_text
 
 	def process_line(self, line, lower_case, punctuation):
+		""" Processes a single line of the text.
+
+		This function removes numbers and speaker names from the line, processes
+		punctuation, and makes all words lower case if desired.
+
+		Notes:
+		-Speaker names are identified by [SPEAKER].  If the brackets are
+		not present, then speaker names will not be removed.
+
+		Parameters
+		----------
+		line: a single line of text from the raw input string
+		lower_case: boolean (True makes words lower case, False leaves
+		            capitalization as is
+		punctuation: "separate" will separate punctuation from the neighboring words
+	                 "delete" will delete all punctuation
+					 Anything else will leave the punctuation as is, which most
+					 often means the punctuation will be the last character of
+					 the preceding word in the line of text.
+
+		Returns
+		-------
+		None
+		"""
+
 		# Removes line numbers and other numeric strings from this line of
 		# the play.
 		processed_line = [word for word in line.split() if not word.isdigit()]
@@ -65,6 +133,17 @@ class Text(object):
 		return processed_line
 
 	def concatenate_processed_text(self):
+		""" Transforms list of lines of processed text into one large string.
+
+		Parameters
+		----------
+		None
+
+		Returns
+		-------
+		None """
+
+
 		concatenated_text = ""
 		for line in self.processed_text:
 			concatenated_text += " ".join(line) + " "
@@ -78,15 +157,3 @@ class Text(object):
 
 	def generate_list_of_words(self):
 		self.list = self.concatenated_text.split()
-
-
-# text = Text("../Texts/agamemnon.txt")
-
-# text.preprocess_raw_text()
-# text.concatenate_processed_text()
-
-# pprint(text.processed_text)
-# pprint(text.concatenated_text)
-
-
-
