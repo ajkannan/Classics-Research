@@ -12,6 +12,8 @@ Besides standard inference algorithms that leverage the results of machine learn
 
 ## Demo
 
+The following code constructs functional n-gram representations of the eight tragedies by Seneca. There exist methods for performing a grid-search of the one-class SVM parameter space to find possibilities for a perfect classifier. No such parameter settings are found in the space (which may be a good thing so as to avoid over-fitting), yet there is a known setting of the parameters to train an effective model. The results of this model are displayed to the user. In particular, the one-class SVM predicts that "Octavia" and "Hercules Oetaeus" were not written by Seneca. 
+
 ```
 from os import listdir
 from os.path import isfile, join
