@@ -16,11 +16,11 @@ def main():
 	files = [f for f in listdir(path) if isfile(join(path, f))]
 	pprint(files)
 
-	# Extract n gram probability features from the texts and 
-	# construct them as a numpy 2D array. We also returns the 
-	# n grams under consideration in the experiments here, 
+	# Extract n gram probability features from the texts and
+	# construct them as a numpy 2D array. We also returns the
+	# n grams under consideration in the experiments here,
 	# although we have no particular use for them.
-	features, n_grams = combine([FNG(Text(path + f)) for f in files])
+	features, n_grams = combine([FNG(Text(path + f), 3) for f in files])
 
 	apply_pca = False
 
@@ -36,7 +36,7 @@ def main():
 			"test" : features[[1, 3], :]
 			}
 
-	
+
 	# Unfortunately, it does not appear to be possible to derive a perfect
 	# accuracy solution in the grid search specified below. However, it is
 	# provided here anyway for educational purposes.
@@ -54,7 +54,7 @@ def main():
 						"train" : clf.predict(x["train"]),
 						"test" : clf.predict(x["test"])
 						}
-				
+
 
 					if all(y["train"] == 1.0) and all(y["test"] == -1.0):
 						pprint({"nu" : nu, "gamma" : gamma, "y" : y, "kernel" : kernel})
