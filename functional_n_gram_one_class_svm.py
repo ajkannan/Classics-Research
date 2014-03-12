@@ -14,6 +14,7 @@ from sklearn.decomposition import PCA
 def main():
 	path = "./Texts/"
 	files = [f for f in listdir(path) if isfile(join(path, f))]
+	pprint(files)
 
 	# Extract n gram probability features from the texts and 
 	# construct them as a numpy 2D array. We also returns the 
@@ -21,7 +22,7 @@ def main():
 	# although we have no particular use for them.
 	features, n_grams = combine([FNG(Text(path + f)) for f in files])
 
-	apply_pca = True
+	apply_pca = False
 
 	if apply_pca:
 		pca = PCA(n_components = features.shape[1])
@@ -39,7 +40,7 @@ def main():
 	# Unfortunately, it does not appear to be possible to derive a perfect
 	# accuracy solution in the grid search specified below. However, it is
 	# provided here anyway for educational purposes.
-	grid_search = True
+	grid_search = False
 
 	if grid_search:
 		for kernel in ["rbf", "linear", "sigmoid", "poly"]:
@@ -57,8 +58,7 @@ def main():
 
 					if all(y["train"] == 1.0) and all(y["test"] == -1.0):
 						pprint({"nu" : nu, "gamma" : gamma, "y" : y, "kernel" : kernel})
-						raw_input()
-
+						
 
 	# It is possible to achieve good results with nu = gamma = .1 and with
 	# a radial basis function kernel.
@@ -70,7 +70,13 @@ def main():
 		"train" : clf.predict(x["train"]),
 		"test" : clf.predict(x["test"])
 	}
-	pprint({"nu" : nu, "gamma" : gamma, "y" : y, "kernel" : kernel})
+
+	metrics = {
+		"train" : clf.decision_function(x["train"]),
+		"test" : clf.decision_function(x["test"])
+	}
+
+	pprint({"nu" : nu, "gamma" : gamma, "y" : y, "kernel" : kernel, "metrics" : metrics})
 
 
 if __name__ == "__main__":

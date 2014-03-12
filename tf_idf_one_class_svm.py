@@ -15,14 +15,12 @@ def main():
 	files = [f for f in listdir(path) if isfile(join(path, f))]
 
 	tfidf = TFIDF()
-
 	for document in files:
 		tfidf.add_text_to_corpus(Text(path + document))
 
 	features, word_list = tfidf.calculate_features_for_corpus()
 
 	apply_pca = True
-
 	if apply_pca:
 		pca = PCA(n_components = features.shape[1])
 		x = {
@@ -56,7 +54,6 @@ def main():
 					
 					if all(y["train"] == 1.0) and all(y["test"] == -1.0):
 						pprint({"nu" : nu, "gamma" : gamma, "y" : y, "kernel" : kernel})
-						raw_input()
 
 
 
@@ -71,7 +68,13 @@ def main():
 		"train" : clf.predict(x["train"]),
 		"test" : clf.predict(x["test"])
 	}
-	pprint({"nu" : nu, "gamma" : gamma, "y" : y, "kernel" : kernel})
+
+	metrics = {
+		"train" : clf.decision_function(x["train"]),
+		"test" : clf.decision_function(x["test"])
+	}
+
+	pprint({"nu" : nu, "gamma" : gamma, "y" : y, "kernel" : kernel, "metrics" : metrics})
 
 
 if __name__ == "__main__":
