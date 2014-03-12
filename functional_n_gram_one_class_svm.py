@@ -58,7 +58,7 @@ def main():
 
 					if all(y["train"] == 1.0) and all(y["test"] == -1.0):
 						pprint({"nu" : nu, "gamma" : gamma, "y" : y, "kernel" : kernel})
-						
+
 
 	# It is possible to achieve good results with nu = gamma = .1 and with
 	# a radial basis function kernel.

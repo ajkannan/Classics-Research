@@ -12,8 +12,6 @@ class TermFrequencyInverseDocumentFrequency(object):
 		self.corpus_frequencies = {}
 
 		
-
-
 	def add_text_to_corpus(self, text):
 		text_word_list = text.list
 		text_frequencies = self.calculate_normalized_frequencies(text_word_list)
@@ -71,18 +69,3 @@ class TermFrequencyInverseDocumentFrequency(object):
 
 		return features, self.corpus_frequencies.keys()
 
-
-
-# text = Text("../Texts/agamemnon.txt")
-# tfidf = TermFrequencyInverseDocumentFrequency()
-
-# tfidf.add_text_to_corpus(Text("../Texts/agamemnon.txt"))
-# tfidf.add_text_to_corpus(Text("../Texts/oedipus.txt"))
-# tfidf.add_text_to_corpus(Text("../Texts/medea.txt"))
-
-# pprint(tfidf.calculate_similarity_scores(text))
-# pprint(tfidf.corpus[0])
-
-# features, word_list = tfidf.calculate_features_for_corpus()
-
-# np.savetxt('test.txt', features)

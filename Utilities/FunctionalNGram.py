@@ -93,12 +93,4 @@ class FunctionalNGram(object):
 
 		self.probability_features = n_gram_probabilities
 
-
-# text = Text("../Texts/agamemnon.txt")
-# fng = FunctionalNGram(text)
-
-# features, n_gram_list = combine_n_gram_features([FunctionalNGram(Text("../Texts/agamemnon.txt")), 
-# 	FunctionalNGram(Text("../Texts/octavia.txt"))])
-
-
-
+		
